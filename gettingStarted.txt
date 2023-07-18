@@ -1,0 +1,75 @@
+todo list nest js (BE), next js (FE)
+video tutorial : https://www.youtube.com/watch?v=9jUh0Y2A3X4
+
+link be : https://www.fullstackbook.com/backend/nestjs-todo/
+
+link fe : https://www.fullstackbook.com/frontend/nextjs-todo/
+
+dokumentasi https://docs.nestjs.com/first-steps 
+
+npm run start
+
+run command line in terminal:
+1. npm i -g @nestjs/cli (install globally once)
+2. buka dulu vscode buka folder new abis itu di terminalnya tuliskan
+nest new project-name --> nest new todo-app-nestjs
+nanti akan terbentuk folder todo-app-nestjs
+3. cd todo-app-nestjs
+4. npm install --save @nestjs/config @nestjs/typeorm typeorm pg (install some dependencies) 
+5. npm run start:dev
+6. ke browser ketik http://localhost:3000/ nanti keluar Hello World!
+7. config .env
+8. ke main.ts ubah sesuai link be (Entry Point / CORS)
+9. bikin file http-exception.filter.ts di folder src, copas sesuai link be (Exception Handler)
+10. app.module.ts ubah sesuai link be
+11. app.service.ts ubah sesuai link be
+12. ke package.json tambahin "typeorm": "typeorm-ts-node-commonjs -d src/data-source.ts"
+
+"typeorm-ts-node-commonjs": allows you to run TypeScript files directly without explicitly compiling them to JavaScript
+
+"-d src/data-source.ts": specifies the file to be executed. to the "data-source.ts" file located in the "src" directory. The "-d" flag is used to specify the file or directory to be executed
+
+when you run the command "npm run typeorm", it will execute TypeORM using ts-node-commonjs and run the "src/data-source.ts" file as the entry point. This script is commonly used for TypeORM-related tasks such as running migrations, generating entities, or executing custom scripts related to database operations.
+
+What is the use of TypeORM?
+TypeORM is a TypeScript ORM (object-relational mapper) library that makes it easy to link your TypeScript application up to a relational database database. TypeORM supports MySQL, SQlite, Postgres, MS SQL Server, and a host of other traditional options.
+
+
+13. bikin file data-source.ts di folder src isi copas link be 
+
+
+14. npm install typeorm , npm install mysql , 
+bikin db command : mysql -u <username> -p -e "CREATE DATABASE <database_name>" --> gbs create manual aja new schema di mysql
+
+15. npx typeorm migration:create src/migration/create-todos-table
+// this command line is used to create a new migration file for the TypeORM framework
+
+16. isi dari 1689417580570-create-todos-table.ts sesuai link be ,  npm install dotenv
+17. run the migration :
+
+npm run typeorm migration:run 
+
+npm run typeorm migration:show --> Check the migration status
+
+18. nest g resource todo  (nanti kebentuk folder todo)
+? What transport layer do you use? REST API
+? Would you like to generate CRUD entry points? Yes
+
+
+ It is used to generate a resource in a NestJS application.
+ Here's a breakdown of the generated files and their purposes:
+ Module : A module is a container that encapsulates related components, controllers, services, and other files
+ controller : The generated controller file (todo.controller.ts) will contain the endpoints (API routes) for handling CRUD operations (Create, Read, Update, Delete) 
+ Service :  implements methods that interact with a database, perform data validation, and execute any necessary business operations.
+ DTOs (Data Transfer Objects) : define the data structure for creating, updating, and retrieving "todo" resources.
+
+todo.entity.ts
+
+nanti ada di be link copas isinya buat 19-25
+19. create-todo.dto.ts (8'35")
+20. todo.entity.ts (8'49")
+21. todo.controller.spec.ts
+22. todo.controller.ts
+23. todo.module.ts (9:34)
+24. todo.service.spec.ts 
+25. todo.service.ts  (10:00)
