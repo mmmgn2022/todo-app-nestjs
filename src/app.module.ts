@@ -1,16 +1,37 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from "@nestjs/config"; // nanti dia auto import pas kita ketik di imports
+import { ConfigModule , ConfigService } from "@nestjs/config"; // nanti dia auto import pas kita ketik di imports
 import { TodoModule } from './todo/todo.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Todo } from './todo/entities/todo.entity';
 
-@Module({ //This section defines the AppModule class and uses the @Module decorator to define the module. The @Module decorator is used to annotate the class as a module and specify its properties.
-  imports: [ConfigModule, ConfigModule.forRoot({ envFilePath: ['.env'] }), TodoModule],
-  controllers: [AppController], //The controllers property is an array that specifies the controllers associated with this module. In this case, it includes the AppController class.
-  providers: [AppService], //The providers property is an array that specifies the providers (services) associated with this module. In this case, it includes the AppService class.
+// @Module({ //This section defines the AppModule class and uses the @Module decorator to define the module. The @Module decorator is used to annotate the class as a module and specify its properties.
+//   imports: [ConfigModule, ConfigModule.forRoot({ envFilePath: ['.env'] }), TodoModule],
+//   controllers: [AppController], //The controllers property is an array that specifies the controllers associated with this module. In this case, it includes the AppController class.
+//   providers: [AppService], //The providers property is an array that specifies the providers (services) associated with this module. In this case, it includes the AppService class.
+// })
+// export class AppModule {}   
+
+@Module({
+  imports: [TypeOrmModule.forRootAsync({
+    imports: [ConfigModule],
+    useFactory: (configService: ConfigService) => ({
+      type: 'mysql',
+      host: configService.get('localhost'),
+      port: +configService.get('3306'),
+      username: configService.get('root'),
+      password: configService.get('Admin123'),
+      database: configService.get('todo-app-nestjs'),
+      entities: [Todo],
+      synchronize: false,
+    }),
+    inject: [ConfigService]
+  }), TodoModule, ConfigModule.forRoot({ envFilePath: ['.env'] }), ConfigModule ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}   
-
+export class AppModule { }
 
 // In NestJS, the app.module.ts file is the root module that defines the structure and configuration of the application. 
 // Overall, this code sets up the root module for a NestJS application, imports necessary modules including the ConfigModule for environment variable loading, and specifies the controllers and providers associated with this module.

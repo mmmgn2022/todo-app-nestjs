@@ -9,14 +9,14 @@ describe('TodoController', () => { //describe function is used to define a test 
   let mockTodo: Todo = new Todo(); // is used as a mock object for testing purposes
   let todoService: TodoService; //represents an instance of the TodoService class
 
-  beforeEach(async () => {
+  beforeEach(async () => { //beforeEach function is a part of the Jest testing framework and is called before each test case in the file. It is used to set up the necessary environment for the tests
     const module: TestingModule = await Test.createTestingModule({ //Test.createTestingModule function is used to create a testing module that includes the TodoController and TodoService
-      controllers: [TodoController],
-      providers: [TodoService, {
-        provide: getRepositoryToken(Todo),
-        useValue: {
-          save: jest.fn().mockResolvedValue(mockTodo),
-          find: jest.fn().mockResolvedValue([mockTodo])
+      controllers: [TodoController], //the TodoController is added as a controller to the testing module. This means that the tests will have access to the methods and endpoints defined in the TodoController class
+      providers: [TodoService, { //The TodoService is added as a provider to the testing module. This ensures that the TodoController has access to an instance of the TodoService during the tests.
+        provide: getRepositoryToken(Todo), //a mock implementation of the repository for the Todo entity is provided.The provide property specifies the token for the repository (obtained using getRepositoryToken(Todo)
+        useValue: { //useValue property defines a mock object with two methods: save and find.
+          save: jest.fn().mockResolvedValue(mockTodo), //The save method is mocked using jest.fn(), which creates a new Jest mock function. It is set up to return a resolved promise with a mockTodo object as the result
+          find: jest.fn().mockResolvedValue([mockTodo]) //The find method is also mocked to return a resolved promise with an array containing the mockTodo object
         }
       }],
     }).compile();

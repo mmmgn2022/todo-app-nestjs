@@ -73,3 +73,5 @@ nanti ada di be link copas isinya buat 19-25
 23. todo.module.ts (9:34)
 24. todo.service.spec.ts 
 25. todo.service.ts  (10:00)
+
+npm i @nestjs/config
