@@ -39,7 +39,7 @@ export class TodoController {
   }
 }
 
-//Overall, this code defines routes for creating, retrieving, updating, and deleting Todo items using the respective HTTP methods and delegates the actual processing of these operations to the TodoService class.
+//Overall, this code defines routes forcreating, retrieving, updating, and deleting Todo items using the respective HTTP methods and delegates the actual processing of these operations to the TodoService class.
 
 // @Body = req body , @Query = req query , @Param = req param 
 

@@ -17,7 +17,7 @@ nanti akan terbentuk folder todo-app-nestjs
 3. cd todo-app-nestjs
 4. npm install --save @nestjs/config @nestjs/typeorm typeorm pg (install some dependencies) 
 5. npm run start:dev
-6. ke browser ketik http://localhost:3000/ nanti keluar Hello World!
+6. ke browser ketik http://localhost:8000/ nanti keluar Hello World!
 7. config .env
 8. ke main.ts ubah sesuai link be (Entry Point / CORS)
 9. bikin file http-exception.filter.ts di folder src, copas sesuai link be (Exception Handler)
@@ -93,18 +93,18 @@ PS C:\Users\Marceline Megan\Desktop\Study\todo-app-nestjs> npm run start
 [Nest] 11824  - 07/19/2023, 14:31:41     LOG [AppService] To Do Book
 
 26. ThunderClient: 
-http://localhost:3000/ 
+http://localhost:8000/ 
 req get
 response: Hello World
 
 coba req get:
-http://localhost:3000/todos 
+http://localhost:8000/todos 
 req get
 response: [] //array kosong krn blm ada data
 
 
 coba req post:
-http://localhost:3000/todos 
+http://localhost:8000/todos 
 req post
 body {
     "name": "study javascript"
@@ -116,7 +116,7 @@ response:
   "completed": false
 }
 
-http://localhost:3000/todos 
+http://localhost:8000/todos 
 req get
 response: (sekarang udah ada data yg barusan di post)
 [
@@ -128,7 +128,7 @@ response: (sekarang udah ada data yg barusan di post)
 ]
 
 coba req get by id --> It takes one parameter named id. /todos/:id, where :id is a parameter representing the unique identifier of the todo item.
-http://localhost:3000/todos/2
+http://localhost:8000/todos/2
 req get
 response:
 {
@@ -138,7 +138,7 @@ response:
 }
 
 coba req put:
-http://localhost:3000/todos/2
+http://localhost:8000/todos/2
 req put (edit semua)
 body:
 {
@@ -149,7 +149,7 @@ response:
   "id": 2,
   "name": "study java"
 }
-kalo dicoba get (http://localhost:3000/todos/2):
+kalo dicoba get (http://localhost:8000/todos/2):
 {
   "id": 2,
   "name": "study java",
@@ -161,7 +161,7 @@ coba req patch:
 abis ditambahin controller patch, restart server 
 [Nest] 4356  - 07/19/2023, 15:26:55     LOG [RouterExplorer] Mapped {/todos/:id, PATCH} route +1ms
 
-http://localhost:3000/todos/2
+http://localhost:8000/todos/2
 req patch (edit sebagian)
 body: 
 {
@@ -172,7 +172,7 @@ response:
   "id": 2,
   "completed": true
 }
-kalo dicoba get (http://localhost:3000/todos/2):
+kalo dicoba get (http://localhost:8000/todos/2):
 {
   "id": 2,
   "name": "study java",
@@ -181,7 +181,7 @@ kalo dicoba get (http://localhost:3000/todos/2):
 
 
 coba req delete:
-req post dulu, http://localhost:3000/todos
+req post dulu, http://localhost:8000/todos
 body:
 {
   "name": "do nestjs homework"
@@ -193,15 +193,55 @@ response:
   "completed": false
 }
 
-http://localhost:3000/todos/3
+http://localhost:8000/todos/3
 req delete
 response:
 status 200 kosong
 
-coba di req get by id (http://localhost:3000/todos/3)
+coba di req get by id (http://localhost:8000/todos/3)
 response:
 status 200 kosong ---> berhasil ke delete
 
+
+coba find all yang completed true
+req get
+http://localhost:8000/todos?completed=true 
+response salah
+
+
+http://localhost:8000/todos?completed=false
+response sudah benar namun =0 dan =1 yg paling benar 
+
+
+http://localhost:8000/todos?completed=0
+response: (sudah benar)
+[
+  {
+    "id": 1,
+    "name": "study javascript",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "name": "study java",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "name": "homework tailwind css",
+    "completed": false
+  }
+]
+
+http://localhost:8000/todos?completed=1
+response: (sudah benar)
+[
+  {
+    "id": 6,
+    "name": "eat sandwich",
+    "completed": true
+  }
+]
 ==========================
 
 PS C:\Users\Marceline Megan\Desktop\Study\todo-app-nestjs> npm run test
