@@ -6,17 +6,11 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Todo } from './todo/entities/todo.entity';
 
-// @Module({ //This section defines the AppModule class and uses the @Module decorator to define the module. The @Module decorator is used to annotate the class as a module and specify its properties.
-//   imports: [ConfigModule, ConfigModule.forRoot({ envFilePath: ['.env'] }), TodoModule],
-//   controllers: [AppController], //The controllers property is an array that specifies the controllers associated with this module. In this case, it includes the AppController class.
-//   providers: [AppService], //The providers property is an array that specifies the providers (services) associated with this module. In this case, it includes the AppService class.
-// })
-// export class AppModule {}   
-
+ //This section defines the AppModule class and uses the @Module decorator to define the module. The @Module decorator is used to annotate the class as a module and specify its properties.
 @Module({
-  imports: [TypeOrmModule.forRootAsync({
-    imports: [ConfigModule],
-    useFactory: (configService: ConfigService) => ({
+  imports: [TypeOrmModule.forRootAsync({ //imports: It specifies the list of modules that are imported into the current module. In this case, it includes TypeOrmModule, ConfigModule, and TodoModule.
+    imports: [ConfigModule], //The TypeOrmModule.forRootAsync() method is used to configure the TypeORM module asynchronously.
+    useFactory: (configService: ConfigService) => ({ //useFactory: It is a factory function that returns the TypeORM configuration object.  It takes configService as an argument, which is an instance of ConfigService from the @nestjs/config module.  This allows you to access the environment variables (configurations) defined in the .env file or provided directly in the code.
       type: 'mysql',
       host: 'localhost', 
       port: 3306, 
@@ -24,12 +18,12 @@ import { Todo } from './todo/entities/todo.entity';
       password: 'Admin123', 
       database: 'todo-app-nestjs', 
       entities: [Todo],
-      synchronize: false,
+      synchronize: true,
     }),
-    inject: [ConfigService]
+    inject: [ConfigService] //inject: It specifies the list of providers (services) that should be injected into the useFactory function. In this case, it injects the ConfigService.
   }), TodoModule, ConfigModule.forRoot({ envFilePath: ['.env'] }), ConfigModule ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController], //The controllers property is an array that specifies the controllers associated with this module. In this case, it includes the AppController class.
+  providers: [AppService], //The providers property is an array that specifies the providers (services) associated with this module. In this case, it includes the AppService class.
 })
 export class AppModule { }
 

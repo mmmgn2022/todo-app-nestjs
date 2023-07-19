@@ -75,3 +75,163 @@ nanti ada di be link copas isinya buat 19-25
 25. todo.service.ts  (10:00)
 
 npm i @nestjs/config
+
+
+keep in mind:
+PS C:\Users\Marceline Megan\Desktop\Study\todo-app-nestjs> npm run start
+
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RoutesResolver] AppController {/}: +15ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RouterExplorer] Mapped {/, GET} route +3ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RoutesResolver] TodoController {/todos}: +0ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RouterExplorer] Mapped {/todos, POST} route +1ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RouterExplorer] Mapped {/todos, GET} route +1ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RouterExplorer] Mapped {/todos/:id, GET} route +0ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RouterExplorer] Mapped {/todos/:id, PUT} route +1ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [RouterExplorer] Mapped {/todos/:id, DELETE} route +1ms
+[Nest] 11824  - 07/19/2023, 14:30:54     LOG [NestApplication] Nest application successfully started +2ms
+[Nest] 11824  - 07/19/2023, 14:31:40     LOG [AppService] To Do Book
+[Nest] 11824  - 07/19/2023, 14:31:41     LOG [AppService] To Do Book
+
+26. ThunderClient: 
+http://localhost:3000/ 
+req get
+response: Hello World
+
+coba req get:
+http://localhost:3000/todos 
+req get
+response: [] //array kosong krn blm ada data
+
+
+coba req post:
+http://localhost:3000/todos 
+req post
+body {
+    "name": "study javascript"
+}
+response:
+{
+  "name": "study javascript",
+  "id": 1,
+  "completed": false
+}
+
+http://localhost:3000/todos 
+req get
+response: (sekarang udah ada data yg barusan di post)
+[
+  {
+    "id": 1,
+    "name": "study javascript",
+    "completed": false
+  }
+]
+
+coba req get by id --> It takes one parameter named id. /todos/:id, where :id is a parameter representing the unique identifier of the todo item.
+http://localhost:3000/todos/2
+req get
+response:
+{
+  "id": 2,
+  "name": "study typescript",
+  "completed": false
+}
+
+coba req put:
+http://localhost:3000/todos/2
+req put (edit semua)
+body:
+{
+  "name": "study java"
+}
+response:
+{
+  "id": 2,
+  "name": "study java"
+}
+kalo dicoba get (http://localhost:3000/todos/2):
+{
+  "id": 2,
+  "name": "study java",
+  "completed": false --> muncul jg 
+}
+
+
+coba req patch:
+abis ditambahin controller patch, restart server 
+[Nest] 4356  - 07/19/2023, 15:26:55     LOG [RouterExplorer] Mapped {/todos/:id, PATCH} route +1ms
+
+http://localhost:3000/todos/2
+req patch (edit sebagian)
+body: 
+{
+  "completed" : true  ---> krn boolean type jangan "true" nanti gak keganti
+}
+response:
+{
+  "id": 2,
+  "completed": true
+}
+kalo dicoba get (http://localhost:3000/todos/2):
+{
+  "id": 2,
+  "name": "study java",
+  "completed": true
+}
+
+
+coba req delete:
+req post dulu, http://localhost:3000/todos
+body:
+{
+  "name": "do nestjs homework"
+}
+response:
+{
+  "name": "do nestjs homework",
+  "id": 3,
+  "completed": false
+}
+
+http://localhost:3000/todos/3
+req delete
+response:
+status 200 kosong
+
+coba di req get by id (http://localhost:3000/todos/3)
+response:
+status 200 kosong ---> berhasil ke delete
+
+==========================
+
+PS C:\Users\Marceline Megan\Desktop\Study\todo-app-nestjs> npm run test
+
+> todo-app-nestjs@0.0.1 test
+> jest
+
+ FAIL  src/app.controller.spec.ts (10.505 s)
+  ● AppController › root › should return "Hello World!"
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       1 failed, 4 passed, 5 total
+Snapshots:   0 total
+Time:        17.834 s
+Ran all test suites.
+
+27. app.controller.spec.ts (18:12)
+PS C:\Users\Marceline Megan\Desktop\Study\todo-app-nestjs> npm run test
+
+> todo-app-nestjs@0.0.1 test
+> jest
+
+ PASS  src/app.controller.spec.ts (8.197 s)
+ PASS  src/todo/todo.controller.spec.ts (9.547 s)
+ PASS  src/todo/todo.service.spec.ts (9.646 s)
+
+Test Suites: 3 passed, 3 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        10.433 s, estimated 15 s
+Ran all test suites.
+
+28. now to front end : todo-app-nextjs
